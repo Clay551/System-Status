@@ -5,7 +5,7 @@ from collections import deque
 from colorama import init, Fore, Back, Style
 import plotext as plt
 
-# Initialize colorama and set background to black
+
 init()
 os.system('color 0f' if os.name == 'nt' else 'tput setab 0')
 print(Back.BLACK + Fore.WHITE + Style.BRIGHT)
@@ -21,7 +21,6 @@ def get_network_usage():
     net_io = psutil.net_io_counters()
     return net_io.bytes_sent, net_io.bytes_recv
 
-# Increase the number of data points for a more stretched graph
 sent_data = deque([0], maxlen=100)
 recv_data = deque([0], maxlen=100)
 time_data = deque([0], maxlen=100)
@@ -43,7 +42,6 @@ def update_plot():
     plt.clf()
     plt.plotsize(100, 20)
     
-    # Create a fully dark background
     plt.canvas_color("black")
     plt.axes_color("black")
     plt.ticks_color("dark_green")
@@ -53,7 +51,6 @@ def update_plot():
     plt.plot(time_data, sent_data, color="green", marker="dot", label="Sent")
     plt.plot(time_data, recv_data, color="blue", marker="dot", label="Received")
     
-    # Set title with legend
     title = plt.colorize("Network Traffic\n", "dark_green")
     title += plt.colorize("Sent", "green") + "  " + plt.colorize("•• Received", "blue")
     plt.title(title)
@@ -61,8 +58,8 @@ def update_plot():
     plt.xlabel(plt.colorize("Time (seconds)", "dark_green"))
     plt.ylabel(plt.colorize("Traffic (bytes/s)", "dark_green"))
     
-    max_y = max(max(sent_data), max(recv_data), 1)  # Ensure max_y is at least 1
-    plt.ylim(0, max_y * 1.2)  # Set y-axis limit
+    max_y = max(max(sent_data), max(recv_data), 1)  
+    plt.ylim(0, max_y * 1.2)  
 
 def main():
     try:
@@ -91,8 +88,8 @@ def main():
     except KeyboardInterrupt:
         print("\nExiting...")
     finally:
-        print(Style.RESET_ALL)  # Reset colors when exiting
-        os.system('color' if os.name == 'nt' else 'tput sgr0')  # Reset terminal colors
+        print(Style.RESET_ALL)
+        os.system('color' if os.name == 'nt' else 'tput sgr0')  
 
 if __name__ == "__main__":
     main()

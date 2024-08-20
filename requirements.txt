@@ -1,0 +1,4 @@
+psutil
+collections
+plotext
+colorama
